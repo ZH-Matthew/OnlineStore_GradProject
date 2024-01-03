@@ -15,7 +15,7 @@ import javax.persistence.Id;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     private String filePath;
     private long fileSize;
     private String mediaType;

@@ -16,10 +16,11 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String phone;
+    private String email;
     private String userName;
     private String password;
     private Role role;
@@ -31,11 +32,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Ad> ads;
 
-    public User(Long id, String firstName, String lastName, String phone, String userName, String password, Role role, Avatar avatar) {
+    public User(int id, String firstName, String lastName, String phone, String email, String userName, String password, Role role, Avatar avatar) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
+        this.email = email;
         this.userName = userName;
         this.password = password;
         this.role = role;
