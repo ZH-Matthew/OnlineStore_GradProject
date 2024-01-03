@@ -22,8 +22,8 @@ public class UserController {
     }
 
     @GetMapping("/me") //+ 401 Unauthorized
-    public ResponseEntity<User> getInformationByAuthorizedUser(){
-        return ResponseEntity.ok(new User());
+    public ResponseEntity<UserDto> getInformationByAuthorizedUser(){
+        return ResponseEntity.ok(new UserDto());
     }
 
     @PutMapping("/me") //+ 401 Unauthorized
