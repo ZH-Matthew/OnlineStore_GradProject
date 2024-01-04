@@ -13,17 +13,17 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User user;
-    private LocalDateTime time;
+    private Integer time;
     @ManyToOne
     @JoinColumn(name = "ads_id")
     private Ad ad;
     private String text;
 
-    public Comment(User user, LocalDateTime time, String text) {
+    public Comment(User user, Integer time, String text) {
         this.user = user;
         this.time = time;
         this.text = text;

@@ -13,13 +13,13 @@ import javax.persistence.*;
 public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     private String filePath;
     private long fileSize;
     private String mediaType;
     private byte[] data;
 
-    public Avatar(long id, String filePath, long fileSize, String mediaType, byte[] data) {
+    public Avatar(int id, String filePath, long fileSize, String mediaType, byte[] data) {
         this.id = id;
         this.filePath = filePath;
         this.fileSize = fileSize;

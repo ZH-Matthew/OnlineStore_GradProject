@@ -13,9 +13,10 @@ import java.util.List;
 public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
     private Integer price;
     private String title;
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -24,5 +25,11 @@ public class Ad {
     @OneToOne
     private Image image;
 
-
+    public Ad(Integer price, String title, String description, User user, Image image) {
+        this.price = price;
+        this.title = title;
+        this.description = description;
+        this.user = user;
+        this.image = image;
+    }
 }
