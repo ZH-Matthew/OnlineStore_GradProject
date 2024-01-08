@@ -1,23 +1,26 @@
 package ru.skypro.homework.mapper;
-
-import org.mapstruct.Mapper;
 import ru.skypro.homework.dto.UpdateUser;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.model.User;
 
-@Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    default User userUpdateDtoToUser(User user, UpdateUser updateUser) {
+    default User updateUserToUser(User user, UpdateUser updateUser) {
         user.setFirstName(updateUser.getFirstName());
         user.setLastName(updateUser.getLastName());
         user.setPhone(updateUser.getPhone());
         return user;
     }
 
-    UpdateUser userToUpdateUserDto(User user);
+    default UpdateUser userToUpdateUserDto(User user){
+        UpdateUser updateUser = new UpdateUser();
+        updateUser.setFirstName(user.getFirstName());
+        updateUser.setLastName(user.getLastName());
+        updateUser.setPhone(user.getPhone());
+        return updateUser;
+    }
 
-    default UserDto userToUserDto(User user) {
+    default UserDto userToUserDto(User user) { //без обратного метода
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getUserName());
