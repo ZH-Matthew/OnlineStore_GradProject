@@ -1,16 +1,14 @@
 package ru.skypro.homework.mapper;
-
-import org.mapstruct.Mapper;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.CommentsDto;
 
+import ru.skypro.homework.dto.CreateOrUpdateComment;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
 public interface CommentMapper {
 
     default CommentDto commentToCommentDto(Comment comment) {
@@ -29,7 +27,7 @@ public interface CommentMapper {
         return comment;
     }
 
-    default CommentsDto commentsToCommentsDto(List<Comment> commentList) {
+    default CommentsDto commentsToCommentsDto(List<Comment> commentList) { //без обратного метода
         CommentsDto commentsDto = new CommentsDto();
         commentsDto.setCount(commentList.size());
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -38,6 +36,18 @@ public interface CommentMapper {
         }
         commentsDto.setResults(commentDtoList);
         return commentsDto;
+    }
+
+    default CreateOrUpdateComment commentToCreateOrUpdateComment(Comment comment){
+        CreateOrUpdateComment createOrUpdateComment = new CreateOrUpdateComment();
+        createOrUpdateComment.setText(comment.getText());
+        return  createOrUpdateComment;
+    }
+
+    default Comment CreateOrUpdateCommentToComment(CreateOrUpdateComment createOrUpdateComment){
+        Comment comment = new Comment();
+        comment.setText(createOrUpdateComment.getText());
+        return comment;
     }
 
 }

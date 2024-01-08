@@ -1,7 +1,4 @@
 package ru.skypro.homework.mapper;
-
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import ru.skypro.homework.dto.AdDto;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateOrUpdateAd;
@@ -12,30 +9,9 @@ import ru.skypro.homework.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Mapper(componentModel = "spring")
 public interface AdMapper {
 
-
-//    @Mapping(source = "author.id", target = "author")
-//    @Mapping(source = "id", target = "pk")
-//    @Mapping(source = "image.filepath", target = "image")
-//    AdDto adToDTO(Ad ad);
-//
-//    @Mapping(target = "id", source = "pk")
-//    @Mapping(target = "author.id", source = "author")
-//    @Mapping(source = "image.filepath", target = "image")
-//    Ad adDtoToModel(AdDto adDto);
-//
-//    @Mapping(source = "id", target = "pk")
-//    @Mapping(source = "user.firstName", target = "authorFirstName")
-//    @Mapping(source = "user.lastName", target = "authorFirstName")
-//    @Mapping(source = "user.email", target = "email")
-//    @Mapping(source = "image.filepath", target = "image")
-//    @Mapping(source = "user.phone", target = "phone")
-//    ExtendedAd toExtendedAd(Ad ad);
-
-    default AdDto adToDto(Ad ad) {
+    default AdDto adToAdDto(Ad ad) {
         AdDto adDto = new AdDto();
         adDto.setAuthor(ad.getUser().getId());
         adDto.setImage(ad.getImage().getFilePath());
@@ -50,7 +26,18 @@ public interface AdMapper {
         return ad;
     }
 
-    default ExtendedAd toExtendedAd(Ad ad) {
+    default AdsDto adListToAds(List<Ad> list) { //без обратного метода
+        AdsDto adsDto = new AdsDto();
+        adsDto.setCount(list.size());
+        List<AdDto> adDtoList = new ArrayList<>();
+        for (Ad ad : list) {
+            adDtoList.add(adToAdDto(ad));
+        }
+        adsDto.setResults(adDtoList);
+        return adsDto;
+    }
+
+    default ExtendedAd toExtendedAd(Ad ad) { //без обратного метода
         ExtendedAd extendedAd = new ExtendedAd();
         extendedAd.setPk(ad.getId());
         extendedAd.setAuthorFirstName(ad.getUser().getFirstName());
@@ -64,19 +51,19 @@ public interface AdMapper {
         return extendedAd;
     }
 
-    Ad createOrUpdateAdToAd(CreateOrUpdateAd createOrUpdateAd);
+    default Ad createOrUpdateAdToAd(CreateOrUpdateAd createOrUpdateAd){
+        Ad ad = new Ad();
+        ad.setDescription(createOrUpdateAd.getDescription());
+        ad.setPrice(createOrUpdateAd.getPrice());
+        ad.setTitle(createOrUpdateAd.getTitle());
+        return ad;
+    }
 
-    CreateOrUpdateAd adToCreateOrUpdateAd(Ad ad);
-
-
-    default AdsDto adListToAds(List<Ad> list) {
-        AdsDto adsDto = new AdsDto();
-        adsDto.setCount(list.size());
-        List<AdDto> adDtoList = new ArrayList<>();
-        for (Ad ad : list) {
-            adDtoList.add(adToDto(ad));
-        }
-        adsDto.setResults(adDtoList);
-        return adsDto;
+    default CreateOrUpdateAd adToCreateOrUpdateAd(Ad ad){
+        CreateOrUpdateAd createOrUpdateAd = new CreateOrUpdateAd();
+        createOrUpdateAd.setDescription(ad.getDescription());
+        createOrUpdateAd.setTitle(ad.getTitle());
+        createOrUpdateAd.setPrice(ad.getPrice());
+        return createOrUpdateAd;
     }
 }

@@ -13,9 +13,9 @@ import java.util.List;
 public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private Integer price;
-    private String title;
+    private int id;  //id объявления
+    private Integer price; //цена объявления
+    private String title; //заголовок объявления
     private String description;
 
     @ManyToOne
@@ -23,7 +23,7 @@ public class Ad {
     private User user;
 
     @OneToOne
-    private Image image;
+    private Image image; //ссылка на картинку объявления
 
     public Ad(Integer price, String title, String description, User user, Image image) {
         this.price = price;
