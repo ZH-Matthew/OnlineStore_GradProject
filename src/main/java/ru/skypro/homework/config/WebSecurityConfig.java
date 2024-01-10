@@ -1,19 +1,25 @@
 package ru.skypro.homework.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.skypro.homework.dto.Role;
+
+import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
@@ -25,32 +31,27 @@ public class WebSecurityConfig {
             "/register"
     };
 
+    private final DataSource dataSource;
+
+    @Autowired
+    public WebSecurityConfig(DataSource dataSource) { this.dataSource = dataSource; }
+
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user =
-                User.builder()
-                        .username("user@gmail.com")
-                        .password("password")
-                        .passwordEncoder(passwordEncoder::encode)
-                        .roles(Role.USER.name())
-                        .build();
-        return new InMemoryUserDetailsManager(user);
+    public JdbcUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+        return jdbcUserDetailsManager;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeHttpRequests(
-                        authorization ->
-                                authorization
-                                        .mvcMatchers(AUTH_WHITELIST)
-                                        .permitAll()
-                                        .mvcMatchers("/ads/**", "/users/**")
-                                        .authenticated())
-                .cors()
-                .and()
-                .httpBasic(withDefaults());
+        http.csrf().disable().authorizeHttpRequests(httpRequest -> httpRequest
+                .mvcMatchers(AUTH_WHITELIST).permitAll()
+                .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/ads").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                .mvcMatchers("/ads/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+                .mvcMatchers("/users/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
+        ).cors().and().httpBasic(withDefaults());
         return http.build();
     }
 
