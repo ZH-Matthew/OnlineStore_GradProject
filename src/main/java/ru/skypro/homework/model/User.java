@@ -1,5 +1,6 @@
 package ru.skypro.homework.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class User {
     @Id
@@ -21,9 +21,16 @@ public class User {
     private String lastName;
     private String phone;
     private String email;
-    private String userName;
-    private String password;
     private Role role;
+
+    //Далее блок колонок для jdbc
+    private String username;
+    private String password;
+
+    private Boolean enabled;
+
+    private Integer priority;
+    //-------------------------------
 
     @OneToOne
     private Avatar avatar;
@@ -38,7 +45,7 @@ public class User {
         this.lastName = lastName;
         this.phone = phone;
         this.email = email;
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
         this.role = role;
         this.avatar = avatar;

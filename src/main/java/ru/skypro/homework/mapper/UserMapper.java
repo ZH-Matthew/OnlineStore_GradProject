@@ -23,7 +23,7 @@ public interface UserMapper {
     default UserDto userToUserDto(User user) { //без обратного метода
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setEmail(user.getUserName());
+        userDto.setEmail(user.getUsername());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setPhone(user.getPhone());
