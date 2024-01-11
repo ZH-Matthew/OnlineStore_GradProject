@@ -1,4 +1,6 @@
 package ru.skypro.homework.mapper;
+
+import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.AdDto;
 import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateOrUpdateAd;
@@ -9,9 +11,9 @@ import ru.skypro.homework.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface AdMapper {
-
-    default AdDto adToAdDto(Ad ad) {
+@Service
+public class AdMapper {
+    public AdDto adToAdDto(Ad ad) {
         AdDto adDto = new AdDto();
         adDto.setAuthor(ad.getAuthor().getId());
         adDto.setImage(ad.getImage().getFilePath());
@@ -21,7 +23,7 @@ public interface AdMapper {
         return adDto;
     }
 
-    default Ad adDtoToAd(AdDto adDto, User user) {
+    public Ad adDtoToAd(AdDto adDto, User user) {
         Ad ad = new Ad();
         ad.setTitle(adDto.getTitle());
         ad.setPrice(adDto.getPrice());
@@ -29,7 +31,7 @@ public interface AdMapper {
         return ad;
     }
 
-    default AdsDto adListToAds(List<Ad> list) { //без обратного метода
+    public AdsDto adListToAds(List<Ad> list) { //без обратного метода
         AdsDto adsDto = new AdsDto();
         adsDto.setCount(list.size());
         List<AdDto> adDtoList = new ArrayList<>();
@@ -40,7 +42,7 @@ public interface AdMapper {
         return adsDto;
     }
 
-    default ExtendedAd toExtendedAd(Ad ad) { //без обратного метода
+    public ExtendedAd toExtendedAd(Ad ad) { //без обратного метода
         ExtendedAd extendedAd = new ExtendedAd();
         extendedAd.setPk(ad.getId());
         extendedAd.setAuthorFirstName(ad.getAuthor().getFirstName());
@@ -54,7 +56,7 @@ public interface AdMapper {
         return extendedAd;
     }
 
-    default Ad createOrUpdateAdToAd(CreateOrUpdateAd createOrUpdateAd){
+    public Ad createOrUpdateAdToAd(CreateOrUpdateAd createOrUpdateAd){
         Ad ad = new Ad();
         ad.setDescription(createOrUpdateAd.getDescription());
         ad.setPrice(createOrUpdateAd.getPrice());
@@ -62,12 +64,11 @@ public interface AdMapper {
         return ad;
     }
 
-    default CreateOrUpdateAd adToCreateOrUpdateAd(Ad ad){
+    public CreateOrUpdateAd adToCreateOrUpdateAd(Ad ad){
         CreateOrUpdateAd createOrUpdateAd = new CreateOrUpdateAd();
         createOrUpdateAd.setDescription(ad.getDescription());
         createOrUpdateAd.setTitle(ad.getTitle());
         createOrUpdateAd.setPrice(ad.getPrice());
         return createOrUpdateAd;
     }
-
 }

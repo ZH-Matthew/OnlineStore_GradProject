@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,6 +35,7 @@ public class AdsServiceImpl implements AdsService {
     private final ImageRepository imageRepository;
     private final AdMapper adMapper;
     private final ImageService imageService;
+
     @Override
     public AdsDto getAllAds() {
         List<Ad> ads = adRepository.findAll();

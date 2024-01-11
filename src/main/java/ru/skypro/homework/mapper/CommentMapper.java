@@ -1,7 +1,8 @@
 package ru.skypro.homework.mapper;
+
+import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.CommentsDto;
-
 import ru.skypro.homework.dto.CreateOrUpdateComment;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
@@ -9,9 +10,9 @@ import ru.skypro.homework.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface CommentMapper {
-
-    default CommentDto commentToCommentDto(Comment comment) {
+@Service
+public class CommentMapper {
+    public CommentDto commentToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setAuthor(comment.getAuthor().getId());
         commentDto.setAuthorImage(comment.getAuthor().getAvatar().getFilePath());
@@ -22,7 +23,7 @@ public interface CommentMapper {
         return commentDto;
     }
 
-    default Comment commentDtoToComment(CommentDto commentDto, User user) {
+    public Comment commentDtoToComment(CommentDto commentDto, User user) {
         Comment comment = new Comment();
         comment.setText(commentDto.getText());
         comment.setCreatedAt(commentDto.getCreatedAt());
@@ -30,7 +31,7 @@ public interface CommentMapper {
         return comment;
     }
 
-    default CommentsDto commentsToCommentsDto(List<Comment> commentList) { //без обратного метода
+    public CommentsDto commentsToCommentsDto(List<Comment> commentList) { //без обратного метода
         CommentsDto commentsDto = new CommentsDto();
         commentsDto.setCount(commentList.size());
         List<CommentDto> commentDtoList = new ArrayList<>();
@@ -41,16 +42,15 @@ public interface CommentMapper {
         return commentsDto;
     }
 
-    default CreateOrUpdateComment commentToCreateOrUpdateComment(Comment comment){
+    public CreateOrUpdateComment commentToCreateOrUpdateComment(Comment comment){
         CreateOrUpdateComment createOrUpdateComment = new CreateOrUpdateComment();
         createOrUpdateComment.setText(comment.getText());
         return  createOrUpdateComment;
     }
 
-    default Comment CreateOrUpdateCommentToComment(CreateOrUpdateComment createOrUpdateComment){
+    public Comment CreateOrUpdateCommentToComment(CreateOrUpdateComment createOrUpdateComment){
         Comment comment = new Comment();
         comment.setText(createOrUpdateComment.getText());
         return comment;
     }
-
 }
