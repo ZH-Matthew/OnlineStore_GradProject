@@ -1,5 +1,6 @@
 package ru.skypro.homework.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class WebSecurityConfig {
+
+    private final MyUserDetailsService userDetailsService;
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -31,33 +35,31 @@ public class WebSecurityConfig {
             "/register"
     };
 
-    private final DataSource dataSource;
-
-    @Autowired
-    public WebSecurityConfig(DataSource dataSource) { this.dataSource = dataSource; }
-
-    @Bean
-    public JdbcUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-        return jdbcUserDetailsManager;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeHttpRequests(httpRequest -> httpRequest
-                .mvcMatchers(AUTH_WHITELIST).permitAll()
-                .mvcMatchers(HttpMethod.GET, "/ads").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-                .mvcMatchers(HttpMethod.POST, "/ads").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .mvcMatchers("/ads/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-                .mvcMatchers("/users/**").hasAnyRole(Role.USER.name(), Role.ADMIN.name())
-        ).cors().and().httpBasic(withDefaults());
+        http.csrf()
+                .disable().
+                userDetailsService(userDetailsService)
+                .authorizeHttpRequests(
+                        authorization ->
+                                authorization
+                                        .antMatchers(HttpMethod.OPTIONS)
+                                        .permitAll()
+                                        .mvcMatchers(AUTH_WHITELIST)
+                                        .permitAll()
+                                        .antMatchers(HttpMethod.GET, "/ads", "/ads/image/**", "/user/image/**")
+                                        .permitAll()
+                                        .mvcMatchers("/ads/**", "/users/**")
+                                        .authenticated())
+                .cors()
+                .and()
+                .httpBasic(withDefaults());
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }
