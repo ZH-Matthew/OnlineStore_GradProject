@@ -13,17 +13,20 @@ public interface CommentMapper {
 
     default CommentDto commentToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
-        commentDto.setAuthor(comment.getUser().getId());
-        commentDto.setAuthorImage(comment.getUser().getAvatar().getFilePath());
-        commentDto.setAuthorFirstName(comment.getUser().getFirstName());
-        commentDto.setCreatedAt(comment.getTime());
+        commentDto.setAuthor(comment.getAuthor().getId());
+        commentDto.setAuthorImage(comment.getAuthor().getAvatar().getFilePath());
+        commentDto.setAuthorFirstName(comment.getAuthor().getFirstName());
+        commentDto.setCreatedAt(comment.getCreatedAt());
         commentDto.setPk(comment.getId());
         commentDto.setText(comment.getText());
         return commentDto;
     }
 
     default Comment commentDtoToComment(CommentDto commentDto, User user) {
-        Comment comment = new Comment(user, commentDto.getCreatedAt(), commentDto.getText());
+        Comment comment = new Comment();
+        comment.setText(commentDto.getText());
+        comment.setCreatedAt(commentDto.getCreatedAt());
+        comment.setAuthor(user);
         return comment;
     }
 

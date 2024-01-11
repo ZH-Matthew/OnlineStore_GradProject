@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "authorities")
 @Data
-public class Authorities {
+public class Authorities { //насколько это здесь нужно?
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)

@@ -13,7 +13,7 @@ public interface AdMapper {
 
     default AdDto adToAdDto(Ad ad) {
         AdDto adDto = new AdDto();
-        adDto.setAuthor(ad.getUser().getId());
+        adDto.setAuthor(ad.getAuthor().getId());
         adDto.setImage(ad.getImage().getFilePath());
         adDto.setPk(ad.getId());
         adDto.setPrice(ad.getPrice());
@@ -22,7 +22,10 @@ public interface AdMapper {
     }
 
     default Ad adDtoToAd(AdDto adDto, User user) {
-        Ad ad = new Ad(adDto.getPrice(), adDto.getTitle(), null, user, null);
+        Ad ad = new Ad();
+        ad.setTitle(adDto.getTitle());
+        ad.setPrice(adDto.getPrice());
+        ad.setAuthor(user);
         return ad;
     }
 
@@ -40,12 +43,12 @@ public interface AdMapper {
     default ExtendedAd toExtendedAd(Ad ad) { //без обратного метода
         ExtendedAd extendedAd = new ExtendedAd();
         extendedAd.setPk(ad.getId());
-        extendedAd.setAuthorFirstName(ad.getUser().getFirstName());
-        extendedAd.setAuthorLastName(ad.getUser().getLastName());
+        extendedAd.setAuthorFirstName(ad.getAuthor().getFirstName());
+        extendedAd.setAuthorLastName(ad.getAuthor().getLastName());
         extendedAd.setDescription(ad.getDescription());
-        extendedAd.setEmail(ad.getUser().getEmail());
+        extendedAd.setEmail(ad.getAuthor().getEmail());
         extendedAd.setImage(ad.getImage().getFilePath());
-        extendedAd.setPhone(ad.getUser().getPhone());
+        extendedAd.setPhone(ad.getAuthor().getPhone());
         extendedAd.setPrice(ad.getPrice());
         extendedAd.setTitle(ad.getTitle());
         return extendedAd;

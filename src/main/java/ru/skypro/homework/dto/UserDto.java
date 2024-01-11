@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserDto {
 
-    private Integer id; //id пользователя
+    private Long id; //id пользователя
 
     private String email; //логин пользователя
 

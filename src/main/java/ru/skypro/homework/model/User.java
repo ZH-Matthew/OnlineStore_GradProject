@@ -1,22 +1,19 @@
 package ru.skypro.homework.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "users")
-@Data
 @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String phone;
@@ -24,30 +21,13 @@ public class User {
     private Role role;
 
     //Далее блок колонок для jdbc
-    private String username;
+    private String username;//насколько здесь нужны эти поля?
     private String password;
 
-    private Boolean enabled;
+    private Boolean enabled; //насколько здесь нужны эти поля?
 
-    private Integer priority;
+    private Integer priority; //насколько здесь нужны эти поля?
     //-------------------------------
-
     @OneToOne
     private Avatar avatar;
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments;
-    @OneToMany(mappedBy = "user")
-    private List<Ad> ads;
-
-    public User(int id, String firstName, String lastName, String phone, String email, String userName, String password, Role role, Avatar avatar) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
-        this.username = userName;
-        this.password = password;
-        this.role = role;
-        this.avatar = avatar;
-    }
 }
