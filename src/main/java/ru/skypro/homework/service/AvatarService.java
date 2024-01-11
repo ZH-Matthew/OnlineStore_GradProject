@@ -5,7 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.model.Avatar;
 
 public interface AvatarService {
-    void updateUserAvatar(MultipartFile image, Authentication authentication);
 
-    Avatar getAvatar(long id);
+    Avatar uploadAvatar(MultipartFile imageFile);
+
+    void removeAvatar(Avatar avatar);
+
+    Avatar getAvatar(Long id);
 }

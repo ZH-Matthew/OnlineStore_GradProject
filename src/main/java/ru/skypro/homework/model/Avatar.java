@@ -1,14 +1,14 @@
 package ru.skypro.homework.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-@Data
 @Entity
+@EqualsAndHashCode
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Avatar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

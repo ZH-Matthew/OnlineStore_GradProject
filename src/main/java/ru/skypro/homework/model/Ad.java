@@ -1,25 +1,29 @@
 package ru.skypro.homework.model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
+@AllArgsConstructor
 public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  //id объявления
-    private Integer price; //цена объявления
-    private String title; //заголовок объявления
+    private long id;
+
     private String description;
 
+    private int price;
+
+    private String title;
+
     @OneToOne
-    private Image image; //ссылка на картинку объявления
+    private Image image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")

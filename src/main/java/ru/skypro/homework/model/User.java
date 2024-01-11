@@ -6,28 +6,31 @@ import ru.skypro.homework.dto.Role;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String phone;
-    private String email;
-    private Role role;
 
-    //Далее блок колонок для jdbc
-    private String username;//насколько здесь нужны эти поля?
+    private String email;
+
+    private String firstName;
+
+    private String lastName;
+
     private String password;
 
-    private Boolean enabled; //насколько здесь нужны эти поля?
+    private String phone;
 
-    private Integer priority; //насколько здесь нужны эти поля?
-    //-------------------------------
+    private Role role;
     @OneToOne
     private Avatar avatar;
 }
+

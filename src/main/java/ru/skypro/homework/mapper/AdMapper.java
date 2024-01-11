@@ -69,4 +69,5 @@ public interface AdMapper {
         createOrUpdateAd.setPrice(ad.getPrice());
         return createOrUpdateAd;
     }
+
 }

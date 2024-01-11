@@ -71,7 +71,7 @@ public class AdsController {
     @Operation(summary = "Обновление картинки объявления", description = "updateImage")
     public ResponseEntity<?> updateImage(@Parameter(description = "ID объявления") @PathVariable("id") long id,
                                          @RequestPart("image") MultipartFile image, Authentication authentication){
-        imageService.updateAdImage(id,image,authentication);
+        adService.updateAdImage(id,image,authentication);
         return ResponseEntity.ok().build();
     }
 
