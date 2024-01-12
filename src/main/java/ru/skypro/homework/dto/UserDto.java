@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserDto {
 
-    private Integer id; //id пользователя
+    private Long id; //id пользователя
 
     private String email; //логин пользователя
 
@@ -17,6 +17,6 @@ public class UserDto {
 
     private Role role; //роль пользователя
 
-    private String image; //ссылка на аватар пользователя
+    private String avatar; //ссылка на аватар пользователя
 
 }

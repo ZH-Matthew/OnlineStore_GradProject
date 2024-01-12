@@ -7,6 +7,8 @@ import ru.skypro.homework.dto.AdsDto;
 import ru.skypro.homework.dto.CreateOrUpdateAd;
 import ru.skypro.homework.dto.ExtendedAd;
 
+import javax.transaction.Transactional;
+
 public interface AdsService {
     AdsDto getAllAds();
 
@@ -19,4 +21,7 @@ public interface AdsService {
     AdDto updateAd(long id, CreateOrUpdateAd createOrUpdateAd, Authentication authentication);
 
     AdsDto getAdsMe(Authentication authentication);
+
+    @Transactional
+    void updateAdImage(Long id, MultipartFile image, Authentication authentication);
 }

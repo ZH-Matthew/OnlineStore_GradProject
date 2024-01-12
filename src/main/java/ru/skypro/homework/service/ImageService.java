@@ -7,8 +7,10 @@ import ru.skypro.homework.model.Image;
 import java.awt.datatransfer.Clipboard;
 
 public interface ImageService {
-    void updateAdImage(long id, MultipartFile image, Authentication authentication);
 
+    Image uploadImage(MultipartFile imageFile);
 
-    Image getImage(long id);
+    void removeImage(Image image);
+
+    Image getImage(Long id);
 }

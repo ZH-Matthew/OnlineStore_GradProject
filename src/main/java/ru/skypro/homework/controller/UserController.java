@@ -45,7 +45,7 @@ public class UserController {
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) //+ 401 Unauthorized
     @Operation(summary = "Обновление аватара авторизованного пользователя", description = "updateAvatarUser")
     public ResponseEntity<?> updateAvatarFromAuthorizedUser(@RequestPart MultipartFile image, Authentication authentication){
-        avatarService.updateUserAvatar(image,authentication);
+        service.updateUserAvatar(image,authentication);
         return ResponseEntity.ok().build();
     }
 

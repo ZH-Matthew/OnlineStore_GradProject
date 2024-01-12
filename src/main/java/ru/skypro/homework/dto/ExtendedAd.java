@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ExtendedAd {
-    private Integer pk; //id объявления
+    private Long pk; //id объявления
 
     private String authorFirstName; //имя автора объявления
 
