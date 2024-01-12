@@ -32,7 +32,7 @@ public class UserMapper {
         userDto.setLastName(user.getLastName());
         userDto.setPhone(user.getPhone());
         userDto.setRole(user.getRole());
-        userDto.setImage(user.getAvatar().getFilePath());
+        userDto.setAvatar(user.getAvatar().getFilePath());
         return userDto;
     }
 
