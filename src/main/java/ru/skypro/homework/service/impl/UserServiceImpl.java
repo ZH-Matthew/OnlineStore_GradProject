@@ -10,6 +10,7 @@ import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.UpdateUser;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.exception.IncorrectPasswordException;
+import ru.skypro.homework.mapper.UserMap;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Avatar;
 import ru.skypro.homework.model.User;
@@ -25,7 +26,7 @@ import javax.transaction.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
-    private final UserMapper mapper;
+    private final UserMap mapper;
     private final AvatarService avatarService;
     private final PasswordEncoder encoder;
 

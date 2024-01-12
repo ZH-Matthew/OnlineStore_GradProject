@@ -10,6 +10,7 @@ import ru.skypro.homework.config.GetAuthentication;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.dto.CommentsDto;
 import ru.skypro.homework.dto.CreateOrUpdateComment;
+import ru.skypro.homework.mapper.CommentMap;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.model.Comment;
@@ -29,7 +30,7 @@ public class CommentsServiceImpl implements CommentsService {
 
     private final AdRepository adRepository;
     private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
+    private final CommentMap commentMapper;
 
     @Override
     public CommentsDto getComments(long id) {
