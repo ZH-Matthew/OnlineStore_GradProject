@@ -6,10 +6,9 @@ import org.mapstruct.Named;
 import ru.skypro.homework.dto.CommentDto;
 import ru.skypro.homework.model.Avatar;
 import ru.skypro.homework.model.Comment;
-import ru.skypro.homework.model.Image;
 
 @Mapper(componentModel = "spring")
-public interface CommentMap {
+public interface CommentMapper {
     String address = "/users/image/";
 
     @Mapping(target = "author", ignore = true)

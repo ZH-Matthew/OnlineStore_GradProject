@@ -6,11 +6,10 @@ import org.mapstruct.Named;
 import ru.skypro.homework.dto.Register;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.model.Avatar;
-import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
 
 @Mapper(componentModel = "spring")
-public interface UserMap {
+public interface UserMapper {
     String address = "/users/image/";
 
     @Mapping(target = "avatar", source = "avatar", qualifiedByName = "avatarToString")

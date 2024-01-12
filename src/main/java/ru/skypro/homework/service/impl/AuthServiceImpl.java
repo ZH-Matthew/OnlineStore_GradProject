@@ -4,12 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.config.MyUserDetailsService;
 import ru.skypro.homework.dto.Register;
 import ru.skypro.homework.exception.UserAlreadyAddException;
-import ru.skypro.homework.mapper.UserMap;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
@@ -24,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
     private final MyUserDetailsService userDetailsService;
     private final UserRepository repository;
     private final PasswordEncoder encoder;
-    private final UserMap mapper;
+    private final UserMapper mapper;
 
 
     @Override

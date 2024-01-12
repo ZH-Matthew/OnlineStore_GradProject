@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface AdMap {
+public interface AdMapper {
 
     String address = "/ads/image/";
 
