@@ -22,6 +22,7 @@ import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.ImageService;
 
+import java.io.IOException;
 import java.util.List;
 import javax.transaction.Transactional;
 
@@ -42,12 +43,12 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public AdDto addAd(CreateOrUpdateAd createOrUpdateAd, MultipartFile image, Authentication authentication) {
+    public AdDto addAd(CreateOrUpdateAd createOrUpdateAd, MultipartFile image, Authentication authentication) throws IOException {
         Ad ad = adMapper.createOrUpdateAdToAd(createOrUpdateAd);
         User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
 
         ad.setAuthor(user);
-        ad.setImage(imageService.uploadImage(image));
+        ad.setImage(imageService.uploadImage(ad.getId(), image));
         adRepository.save(ad);
 
         return adMapper.adToAdDto(ad);
@@ -93,12 +94,12 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     @Transactional
-    public void updateAdImage(Long id, MultipartFile image, Authentication authentication){
+    public void updateAdImage(Long id, MultipartFile image, Authentication authentication) throws IOException {
         Ad ad = adRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Объявление с ID" + id + "не найдено"));
         checkPermit(ad, authentication);
         Image imageFile = ad.getImage();
-        ad.setImage(imageService.uploadImage(image));
+        ad.setImage(imageService.uploadImage(ad.getId(), image));
         imageService.removeImage(imageFile);
         adRepository.save(ad);
     }

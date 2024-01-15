@@ -4,7 +4,6 @@ import lombok.*;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Setter

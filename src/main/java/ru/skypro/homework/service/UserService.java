@@ -7,6 +7,7 @@ import ru.skypro.homework.dto.UpdateUser;
 import ru.skypro.homework.dto.UserDto;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 public interface UserService {
     void setPassword(NewPassword newPassword, Authentication authentication);
@@ -16,6 +17,6 @@ public interface UserService {
     UpdateUser updateUserInfo(UpdateUser update, Authentication authentication);
 
     @Transactional
-    void updateUserAvatar(MultipartFile image, Authentication authentication);
+    void updateUserAvatar(MultipartFile image, Authentication authentication) throws IOException;
 
 }

@@ -18,6 +18,7 @@ import ru.skypro.homework.service.AvatarService;
 import ru.skypro.homework.service.UserService;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUserAvatar(MultipartFile image, Authentication authentication) {
+    public void updateUserAvatar(MultipartFile image, Authentication authentication) throws IOException {
         User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
         Avatar imageFile = user.getAvatar();
         user.setAvatar(avatarService.uploadAvatar(image));
