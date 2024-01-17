@@ -8,11 +8,12 @@ import ru.skypro.homework.dto.CreateOrUpdateAd;
 import ru.skypro.homework.dto.ExtendedAd;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 
 public interface AdsService {
     AdsDto getAllAds();
 
-    AdDto addAd(CreateOrUpdateAd createOrUpdateAdDTO, MultipartFile image, Authentication authentication);
+    AdDto addAd(CreateOrUpdateAd createOrUpdateAdDTO, MultipartFile image, Authentication authentication) throws IOException;
 
     ExtendedAd getAd(long id);
 
@@ -23,5 +24,5 @@ public interface AdsService {
     AdsDto getAdsMe(Authentication authentication);
 
     @Transactional
-    void updateAdImage(Long id, MultipartFile image, Authentication authentication);
+    void updateAdImage(Long id, MultipartFile image, Authentication authentication) throws IOException;
 }

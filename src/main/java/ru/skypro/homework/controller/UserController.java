@@ -13,6 +13,8 @@ import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.impl.AvatarServiceImpl;
 import ru.skypro.homework.service.impl.UserServiceImpl;
 
+import java.io.IOException;
+
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -44,7 +46,7 @@ public class UserController {
 
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) //+ 401 Unauthorized
     @Operation(summary = "Обновление аватара авторизованного пользователя", description = "updateAvatarUser")
-    public ResponseEntity<?> updateAvatarFromAuthorizedUser(@RequestPart MultipartFile image, Authentication authentication){
+    public ResponseEntity<?> updateAvatarFromAuthorizedUser(@RequestPart MultipartFile image, Authentication authentication) throws IOException {
         service.updateUserAvatar(image,authentication);
         return ResponseEntity.ok().build();
     }

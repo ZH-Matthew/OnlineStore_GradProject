@@ -14,6 +14,8 @@ import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.impl.AdsServiceImpl;
 import ru.skypro.homework.service.impl.ImageServiceImpl;
 
+import java.io.IOException;
+
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -34,7 +36,7 @@ public class AdsController {
     @Operation(summary = "Добавление объявления", description = "addAd")
     public ResponseEntity<AdDto> addAd(@RequestPart(value = "properties", required = false) CreateOrUpdateAd createOrUpdateAdDTO,
                                        @RequestPart("image") MultipartFile image,
-                                       Authentication authentication) {
+                                       Authentication authentication) throws IOException {
         return ResponseEntity.ok(adService.addAd(createOrUpdateAdDTO, image, authentication));
     }
 
@@ -70,7 +72,7 @@ public class AdsController {
     @PatchMapping(value = "{id}/image" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE) //+ 401 Unauthorized + 403 Forbidden + 404 Not found
     @Operation(summary = "Обновление картинки объявления", description = "updateImage")
     public ResponseEntity<?> updateImage(@Parameter(description = "ID объявления") @PathVariable("id") long id,
-                                         @RequestPart("image") MultipartFile image, Authentication authentication){
+                                         @RequestPart("image") MultipartFile image, Authentication authentication) throws IOException {
         adService.updateAdImage(id,image,authentication);
         return ResponseEntity.ok().build();
     }
