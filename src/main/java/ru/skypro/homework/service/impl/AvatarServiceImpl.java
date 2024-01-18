@@ -23,18 +23,34 @@ public class AvatarServiceImpl implements AvatarService {
     private final AvatarRepository repository;
     private final UserRepository userRepository;
 
-
+    /**
+     * Метод для удаления аватара из репозитория
+     *
+     * @param avatar
+     *
+     */
     @Override
     public void removeAvatar(Avatar avatar) {
         repository.delete(avatar);
 
     }
-
+    /**
+     * Метод для поиска аватара пользователя по id в репозитории
+     *
+     * @param id
+     *
+     */
     @Override
     public Avatar getAvatar(Long id) {
         return repository.findById(id).orElse(new Avatar());
     }
 
+    /**
+     * Метод для загрузки аватара
+     *
+     * @param image изображение
+     * @throws IOException
+     */
     @Override
     public Avatar uploadAvatar(MultipartFile image) throws IOException {
         User user = userRepository.findUserByEmailIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName()).get();
@@ -59,6 +75,12 @@ public class AvatarServiceImpl implements AvatarService {
         return avatar;
     }
 
+    /**
+     * Вспомогательный метод для получения формата файла
+     *
+     * @param fileName
+     *
+     */
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
