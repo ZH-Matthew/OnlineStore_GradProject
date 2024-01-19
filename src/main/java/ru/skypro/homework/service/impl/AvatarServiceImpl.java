@@ -15,18 +15,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
-
+/**
+ * <b>Сервис аватарок</b>
+ * Хранит основную логику по работе с аватарами пользователей
+ */
 @Service
 @RequiredArgsConstructor
 public class AvatarServiceImpl implements AvatarService {
-    public static String uploadDirectory = System.getProperty("user.dir") + "/images";
+
+    public static String uploadDirectory = System.getProperty("user.dir") + "/images"; // user.dir - используемая директория
     private final AvatarRepository repository;
     private final UserRepository userRepository;
 
     /**
-     * Метод для удаления аватара из репозитория
+     * Метод удаления аватара из репозитория
      *
-     * @param avatar
+     * @param avatar аватар
      *
      */
     @Override
@@ -35,9 +39,9 @@ public class AvatarServiceImpl implements AvatarService {
 
     }
     /**
-     * Метод для поиска аватара пользователя по id в репозитории
+     * Метод поиска аватара пользователя по id в репозитории
      *
-     * @param id
+     * @param id id аватара
      *
      */
     @Override
@@ -46,7 +50,7 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     /**
-     * Метод для загрузки аватара
+     * Метод загрузки аватара
      *
      * @param image изображение
      * @throws IOException
@@ -76,9 +80,9 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     /**
-     * Вспомогательный метод для получения формата файла
+     * Метод получения формата файла
      *
-     * @param fileName
+     * @param fileName имя файла
      *
      */
     private String getExtensions(String fileName) {
