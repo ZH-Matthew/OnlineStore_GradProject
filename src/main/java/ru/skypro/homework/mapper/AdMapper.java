@@ -13,6 +13,10 @@ import ru.skypro.homework.model.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <b> Маппер объявлений </b> <p>
+ * Контролируется MapStruct
+ */
 @Mapper(componentModel = "spring")
 public interface AdMapper {
 

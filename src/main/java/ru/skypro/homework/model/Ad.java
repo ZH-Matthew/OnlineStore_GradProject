@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+/**
+ * <b> Модель объявления </b> <p>
+ * Связана с {@link Image} через OneToOne, <p> и с {@link User} через ManyToOne
+ */
 @Entity
 @Getter
 @Setter

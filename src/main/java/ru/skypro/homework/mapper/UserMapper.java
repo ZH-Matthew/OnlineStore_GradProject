@@ -7,7 +7,10 @@ import ru.skypro.homework.dto.Register;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.model.Avatar;
 import ru.skypro.homework.model.User;
-
+/**
+ * <b> Маппер пользователей </b> <p>
+ * Контролируется MapStruct
+ */
 @Mapper(componentModel = "spring")
 public interface UserMapper {
     String address = "/users/image/";
