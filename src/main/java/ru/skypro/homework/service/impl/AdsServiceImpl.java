@@ -67,7 +67,6 @@ public class AdsServiceImpl implements AdsService {
     public AdDto addAd(CreateOrUpdateAd createOrUpdateAd, MultipartFile image, Authentication authentication) throws IOException {
         Ad ad = adMapper.createOrUpdateAdToAd(createOrUpdateAd);
         User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
-        System.out.println(ad.getId());
         ad.setAuthor(user);
         adRepository.save(ad);
         ad.setImage(imageService.uploadImage(ad.getId(), image));
