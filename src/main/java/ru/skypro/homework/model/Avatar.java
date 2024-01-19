@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+/**
+ * <b> Модель аватара пользователя </b>
+ */
 @Entity
 @EqualsAndHashCode
 @Getter
