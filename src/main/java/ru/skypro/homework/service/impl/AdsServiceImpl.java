@@ -67,11 +67,10 @@ public class AdsServiceImpl implements AdsService {
     public AdDto addAd(CreateOrUpdateAd createOrUpdateAd, MultipartFile image, Authentication authentication) throws IOException {
         Ad ad = adMapper.createOrUpdateAdToAd(createOrUpdateAd);
         User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
-
         ad.setAuthor(user);
+        adRepository.save(ad);
         ad.setImage(imageService.uploadImage(ad.getId(), image));
         adRepository.save(ad);
-
         return adMapper.adToAdDto(ad);
     }
 
@@ -81,7 +80,7 @@ public class AdsServiceImpl implements AdsService {
      */
     @Override
     public ExtendedAd getAd(long id) {
-        return adMapper.toExtendedAd(adRepository.findById(id).orElseThrow(()->
+        return adMapper.toExtendedAd(adRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Объявление с ID = " + id + " не найдено ")));
     }
 
@@ -104,12 +103,12 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     @Transactional
-    public void deleteAd(long id, Authentication authentication){
+    public void deleteAd(long id, Authentication authentication) {
 
         Ad ad = adRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Объявление с ID" + id + "не найдено"));
 
-        checkPermit(ad,authentication);
+        checkPermit(ad, authentication);
         commentRepository.deleteCommentsByAdId(id);
         imageRepository.deleteById(ad.getImage().getId());
         adRepository.deleteById(id);
@@ -174,6 +173,7 @@ public class AdsServiceImpl implements AdsService {
     public void updateAdImage(Long id, MultipartFile image, Authentication authentication) throws IOException {
         Ad ad = adRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Объявление с ID" + id + "не найдено"));
+        User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
         checkPermit(ad, authentication);
         Image imageFile = ad.getImage();
         ad.setImage(imageService.uploadImage(ad.getId(), image));
@@ -189,7 +189,7 @@ public class AdsServiceImpl implements AdsService {
      * @param ad объявление
      * @param authentication объект аутентификации с данными текущего пользователя
      */
-    public void checkPermit(Ad ad, Authentication authentication){
+    public void checkPermit(Ad ad, Authentication authentication) {
         if (!ad.getAuthor().getEmail().equals(authentication.getName())
                 && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
             throw new AccessDeniedException("Вы не можете редактировать или удалять чужое объявление");
