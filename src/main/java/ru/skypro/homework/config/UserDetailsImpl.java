@@ -10,6 +10,9 @@ import ru.skypro.homework.model.User;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Собственная реализация UserDetails, хранит {@link User} и методы по работе с ним
+ */
 @RequiredArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 

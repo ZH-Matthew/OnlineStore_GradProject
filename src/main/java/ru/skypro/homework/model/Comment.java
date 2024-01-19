@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+/**
+ * <b> Модель комментария объявления </b> <p>
+ * Связана с {@link User} через ManyToOne, <p> и с {@link Ad} через ManyToOne
+ */
 @Entity
 @Getter
 @Setter

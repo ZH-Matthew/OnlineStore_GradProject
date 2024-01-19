@@ -5,6 +5,10 @@ import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
 
+/**
+ * <b> Модель пользователя </b> <p>
+ * Связана с {@link Avatar} через OneToOne
+ */
 @Getter
 @Setter
 @EqualsAndHashCode
