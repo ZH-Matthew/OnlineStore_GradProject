@@ -18,8 +18,11 @@ import java.io.IOException;
 
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
+//Аннотация @CrossOrigin позволяет выполнять запросы между разными источниками к аннотированным методам контроллера
 @RestController
 @RequiredArgsConstructor
+//— это аннотация Lombok, которая генерирует конструкторы для всех конечных и ненулевых полей.
+//(все поля final и помеченные @NonNull, будут добавлены в конструктор в качестве параметра, остальные поля не будут добавлены.
 @RequestMapping("/ads")
 public class AdsController {
 
