@@ -15,26 +15,46 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
-
+/**
+ * <b>Сервис аватарок</b>
+ * Хранит основную логику по работе с аватарами пользователей
+ */
 @Service
 @RequiredArgsConstructor
 public class AvatarServiceImpl implements AvatarService {
-    public static String uploadDirectory = System.getProperty("user.dir") + "/images";
+
+    public static String uploadDirectory = System.getProperty("user.dir") + "/images"; // user.dir - используемая директория
     private final AvatarRepository repository;
     private final UserRepository userRepository;
 
-
+    /**
+     * Метод удаления аватара из репозитория
+     *
+     * @param avatar аватар
+     *
+     */
     @Override
     public void removeAvatar(Avatar avatar) {
         repository.delete(avatar);
 
     }
-
+    /**
+     * Метод поиска аватара пользователя по id в репозитории
+     *
+     * @param id id аватара
+     *
+     */
     @Override
     public Avatar getAvatar(Long id) {
         return repository.findById(id).orElse(new Avatar());
     }
 
+    /**
+     * Метод загрузки аватара
+     *
+     * @param image изображение
+     * @throws IOException
+     */
     @Override
     public Avatar uploadAvatar(MultipartFile image) throws IOException {
         User user = userRepository.findUserByEmailIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName()).get();
@@ -59,6 +79,12 @@ public class AvatarServiceImpl implements AvatarService {
         return avatar;
     }
 
+    /**
+     * Метод получения формата файла
+     *
+     * @param fileName имя файла
+     *
+     */
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
