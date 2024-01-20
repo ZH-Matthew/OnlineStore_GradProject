@@ -1,19 +1,18 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.config.GetAuthentication;
-import ru.skypro.homework.dto.CommentsDto;
 import ru.skypro.homework.dto.NewPassword;
 import ru.skypro.homework.dto.UpdateUser;
 import ru.skypro.homework.dto.UserDto;
 import ru.skypro.homework.exception.IncorrectPasswordException;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Avatar;
-import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AvatarService;
@@ -25,6 +24,7 @@ import java.io.IOException;
  * <b> Сервис для работы с пользователями </b> <p>
  * Содержит CRUD методы
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
     public UpdateUser updateUserInfo(UpdateUser update, Authentication authentication) {
         User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
         user.setFirstName(update.getFirstName());
-        user.setLastName(user.getLastName());
-        user.setPhone(user.getPhone());
+        user.setLastName(update.getLastName());
+        user.setPhone(update.getPhone());
         repository.save(user);
         return update;
     }

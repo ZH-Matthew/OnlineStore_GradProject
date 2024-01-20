@@ -100,7 +100,6 @@ public class AdsServiceImpl implements AdsService {
     //Метод использует аннотацию @Transactional, которая дает понять Spring что данный метод - это не поочередные
     //самостоятельные действия внутри, а единая транзакция с возможностью отката. Spring сам реализует запросы к БД
     //и "упаковку" в транзакции. Тем самым мы обезопасим наше удаление от непредвиденных сбоев и неточностей.
-
     @Override
     @Transactional
     public void deleteAd(long id, Authentication authentication) {
@@ -173,7 +172,6 @@ public class AdsServiceImpl implements AdsService {
     public void updateAdImage(Long id, MultipartFile image, Authentication authentication) throws IOException {
         Ad ad = adRepository.findById(id).orElseThrow(() ->
                 new NotFoundException("Объявление с ID" + id + "не найдено"));
-        User user = new GetAuthentication().getAuthenticationUser(authentication.getName());
         checkPermit(ad, authentication);
         Image imageFile = ad.getImage();
         ad.setImage(imageService.uploadImage(ad.getId(), image));
